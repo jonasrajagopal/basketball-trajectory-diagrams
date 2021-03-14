@@ -31,17 +31,12 @@ flags.DEFINE_float('iou', 0.25, 'iou threshold')
 flags.DEFINE_float('score', 0.12, 'score threshold')
 flags.DEFINE_boolean('dont_show', False, 'dont show video output')
 
-#colors = [[0,0,0], [50,205,50], [60,20,220], [255,0,255], [255,255,0], [128,0,128], [255,0,0],[255,191,0], [0, 165,255], 
-          #[255,255,255], [0,255,0], [0,255,255],[0,128,128]]
-
 colors = [[0,0,0], [0,0,255], [255,255,255], [0,128,185],[0,225,0], [255, 0, 0], [255,255,51],
          [204,0,102], [100,100,100],[0, 255, 255], [255,0,255], [0,0,102], [135, 225, 0], [51, 255, 51], [117, 0, 220], 
          [153, 0, 153], [255,51, 153], [102, 51, 0], [75, 75, 75], [204, 102, 0], [206, 43, 72], [191, 0, 255], [255, 224, 102], 
          [168, 255, 187], [0, 76, 92], [56, 255, 167], [80, 255, 5], [92, 0, 49], [255, 148, 181], 
          [0, 194, 136], [241, 94, 242], [163, 240, 255], [204, 157, 0], [63, 153, 0], [170, 170, 170], [164, 255, 5], [124, 143, 0], [51, 0, 128], [204, 255, 153], [10, 116, 255]]
-#colors = [[163, 240, 255],  , , , 
-     #      [124, 143, 0], [204, 157, 0], , [0, 255, 16], [241, 94, 242],
-     #      [255, 224, 102], ]
+
 color_dict = {}
 
 draw_boxes = False
@@ -49,41 +44,13 @@ object_tracking = True
 siftLK = True
 homography_no_tracking = False
 
-#four_corners = [[263, 244], [918, 208], [1207, 485], [262, 564]]
-
-#four_corners = [[209,238], [503, 214], [860, 287], [987, 401]]
-
-#four_corners = [[481, 217], [919, 181], [1043, 286], [765, 244]]
-#basketball_court = np.float32([[210,0], [441,0],[440, 182],[356, 75]])
-
-#four_corners = np.array([[103, 242], [788,185], [1280, 659], [334, 720]], np.float32)
-#basketball_court = np.array([[129,0], [513, 0], [513, 686], [129, 686]], np.float32)
-
-#basketball_court = np.float32([[0,0], [331,0],[331, 630],[0, 630]])
-
-#four_corners = [[263, 244], [918, 208], [1207, 485], [262, 564]]
-
-#four_corners = [[429, 360], [927, 311], [102, 241], [531, 520]]
-#basketball_court = np.float32([[105,219], [331,217], [0,0], [106, 416]])
-
-#four_corners = [[501, 244], [981, 285], [766, 662], [87, 581]]
-#basketball_court = np.float32([[0,0], [335, 0], [335, 630], [0,630]])
-
-#four_corners = [[395, 331], [743, 368], [657, 479], [270, 435]]
-#basketball_court = np.float32([[0,214], [229, 214], [229, 414], [0,414]])
-#basketball_court = np.float32([[0, 232], [266, 232], [266,455], [0,455]])
-
-#four_corners = [[426, 314], [981, 341], [151, 512], [966, 572]]
-#basketball_court = np.float32([[0,0], [480,0], [480, 511], [0, 511]])
-
-four_corners = np.array([[501, 244], [981, 285], [766, 662], [87, 581]], np.float32)
+four_corners = np.array([[x1, y1], [x2, y2], [x3, y3], [x4, y4]], np.float32)
 
 court = cv2.imread("./courts/celtics3.png")
 
 output_width = court.shape[1]
 output_height = court.shape[0] 
-basketball_court = np.array([[0,0], [384, 0], [384, output_height], [0, output_height]], np.float32)
-
+basketball_court = np.array([[0,0], [output_width, 0], [output_width, output_height], [0, output_height]], np.float32)
 
 #Smart points [[103, 242], [788,185], [1280, 659], [334, 720]]
 #Bojan points [[580, 242], [1186, 289], [1083, 645], [238,508]]
@@ -91,50 +58,15 @@ basketball_court = np.array([[0,0], [384, 0], [384, output_height], [0, output_h
 #Smart 2 [[263, 244], [918, 208], [1207, 485], [262, 564]]
 #Giannis [[426, 314], [981, 341], [151, 512], [966, 572]]
 #Kemba [[501, 244], [981, 285], [766, 662], [87, 581]]
-#PR2 (does not work as well) points = [[299, 272], [812, 239], [1277, 547], [537, 620]], [[299, 272], [812, 239], [1111, 436], [649, 450]]
+#PR2 [[299, 272], [812, 239], [1111, 436], [649, 450]]
 #PR1 [[405, 240], [1028, 271], [918, 719], [23, 654]]
 #Horford [[193, 201], [731, 156], [1147, 532], [391, 627]]
-
-
-
-
-# The output width:x
-    #Courtney Lee: output_width = 507
-    #Kemba: output_width = 515
-    #Sexton: output_width = 370
-    #Smart1: output_width = 386
-    #Smart2: output_width = 560
-    #Horford: output_width = 331
-    #Bojan: output_width = 390
-    #No Homography: output_width = 1280
-    #Pick and Roll 1: output_width = 406
-    #Pick and Roll 2: output_width = 583
-    #Giannis: 480
-
-
-
-# List of the output heights for each of the videos
-    #Courtney Lee: output_height = 903
-    #Kemba: output_height = 687
-    #Sexton: output_height = 542
-    #Smart1: output_height = 687
-    #Smart2: output_height = 687
-    #Horford: output_height = 631
-    #No Homography: output_height = 720
-    #Bojan: output_height = 596
-    #PickandRoll1: output_height = 671
-    #PickandRoll2: output_height = 807
-    #Giannis: 511
-
 
 if draw_boxes == True:
     output_width = 1280
     output_height = 720
-
-# The homography width and height are equal to the output width and height in most cases
-homography_height = output_height
-homography_width = output_width
-
+    
+#initialize the SORT algorithm
 mot_tracker = Sort() 
 
 def main(_argv):
@@ -233,7 +165,8 @@ def main(_argv):
         pred_bbox[0] = pred_bbox[0][:,player_ixs]
         pred_bbox[1] = pred_bbox[1][:,player_ixs]
         pred_bbox[2] = pred_bbox[2][:,player_ixs]
-              
+           
+        #The SIFT-LK method
         if siftLK == True:
             gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if count % 10 == 0:
@@ -408,7 +341,6 @@ def homographypts_tracked(boxes):
             points.append(point)
             scores.append(score)
     
-    #basketball_court = np.float32([[0,0],[homography_width, 0], [homography_width,homography_height], [0, homography_height]])
     #Compute the homography and convert the points
     matrix = cv2.getPerspectiveTransform(four_corners, basketball_court)
     points = np.asarray(points).reshape(-1, 1, 2).astype(np.float64)
