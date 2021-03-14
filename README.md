@@ -10,3 +10,4 @@ Bewley, A., Ge, Z., Ott, L., Ramos, F., & Upcroft, B. (2016). Simple online and 
 https://github.com/abewley/sort.
 
 The SIFTLK method is incorporated into the detectvideo.py function (the main). 
+There are four different settings at the top of the detectvideo file. The typical settings are True for SIFTLK and Object_tracking and False for draw_boxes and homography_no_tracking.
