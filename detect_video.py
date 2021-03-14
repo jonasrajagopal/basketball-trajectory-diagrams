@@ -391,20 +391,7 @@ def get_color(tracking_id):
 #    matrix = cv2.getPerspectiveTransform(photopts,basketball_court)
 #    new = cv2.warpPerspective(img, matrix, (output_width, output_height)
 #    return new
-# List of the four corners for each of the videos
-    #CourtneyLeePoints = np.float32([[871, 381],[1472, 424],[1238, 877],[319,758]])
-    #Kembapts = np.float32([[501, 244],[1160, 298],[1057, 703],[89,579]])
-    #GiannisPts = np.float32([[427, 314],[1034, 345],[1020, 572],[153,512]])
-    #Sexton2Pts = np.float32([[0, 335],[596, 147],[1280, 500],[841,697]])
-    #Sexton1Pts = np.float32([[301, 261],[965, 278],[887, 623],[276,574]])
-    #HorfordPts = np.float32([[189, 199],[727, 153],[1143, 529],[378,624]])
-    #Smart1Pts = np.float32([[240, 254],[798, 209],[1247, 622],[434,701]])
-    #Smart2Pts = np.float32([[225, 247],[900, 208],[1217, 509],[225,558]])
-    #Bojan_Points = np.float32([[581, 242],[1101, 282],[987, 632],[232,507]])
-    #PickandRoll2 = np.float32([[86,282],[720,238],[1186,544],[223,670] ])
-    #PickandRoll1 = np.float32([[424,246],[1125,283],[1013,720],[50,654] ])
-    #Sexton2Pts = np.float32([[0, 332],[575, 154],[1280, 500],[852,691]])
-   
+
 
 if __name__ == '__main__':
     try:
