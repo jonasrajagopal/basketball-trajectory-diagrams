@@ -28,7 +28,7 @@ pts= pts.astype(int)
 print(pts)
 #pts = np.float([kp[idx].pt for idx in range(0, len(kp))]).reshape(-1, 1, 2)
 
-
+#For a video:
 #while True:
 #    _, frame = cap.read()
 #    gray= cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
