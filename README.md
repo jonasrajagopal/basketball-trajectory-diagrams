@@ -3,6 +3,7 @@ TheAIGuysCode, & Nickvaras. (2020). TheAIGuysCode/yolov4-deepsort. Retrieved Dec
 
 Complete instructions for how to run YOLOv4 can be found in the "YOLOv4 README.md" file. The way that I ran the system is:
 
+
 Run YOLOv4 on a video:
 python detect_video.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --video ./data/video/video.mp4 --output ./detections/results.mp4
 
