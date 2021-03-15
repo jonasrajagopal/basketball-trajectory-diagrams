@@ -46,7 +46,8 @@ while True:
     else:
         print('Video has ended or failed, try a different video format!')
         break
-    
+        
+    #Find the new SIFT keypoints every 10 frames 
     if count % 10 == 0:
         sift = cv2.xfeatures2d.SIFT_create()
         kp = sift.detect(gray_frame,None)
@@ -68,17 +69,17 @@ while True:
         old_points3 = np.array(pts3, dtype = np.float32)
         old_points4 = np.array(pts4, dtype = np.float32)
         
-
+    #Draw the red circles representing where the points were are the beginning of the video.
     for i in range(0, 4):
         cv2.circle(frame, (original_points[i][0], original_points[i][1]), 5, (0,0,255), 2)
     
-    #new_points, status, error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame, old_points, None, **lk_params)
+    #Calculate the optical flow at the relevant SIFT keypoints
     new_points1, status, error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame, old_points1, None, **lk_params)
     new_points2, status, error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame, old_points2, None, **lk_params)
     new_points3, status, error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame, old_points3, None, **lk_params)
     new_points4, status, error = cv2.calcOpticalFlowPyrLK(old_gray, gray_frame, old_points4, None, **lk_params)
     
-    
+    #Compute the median of all of the optical flows.
     diffs = [[[],[]],[[],[]],[[],[]],[[],[]]]
     for i in range(0,len(new_points1)):
         diffs[0][0].append(new_points1[i][0] - old_points1[i][0])
@@ -107,7 +108,7 @@ while True:
             points[i][j] = points[i][j] + deltas[i][j]
             points[i][j] = points[i][j].astype(np.float32)
             
-    
+    #Draw the new locations
     for i in range(0, 4):
         cv2.circle(frame, (points[i][0], points[i][1]), 5, (0,255,0), -1)
     
@@ -120,11 +121,11 @@ while True:
     count = count + 1
     
     old_gray = gray_frame.copy()
-    #old_points = new_points
     old_points1 = new_points1
     old_points2 = new_points2
     old_points3 = new_points3
     old_points4 = new_points4
+   
     #fps = 1.0 / (time.time() - start_time)
     #print("FPS: %.2f" % fps)
 
