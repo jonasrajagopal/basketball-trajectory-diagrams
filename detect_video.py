@@ -52,16 +52,6 @@ output_width = court.shape[1]
 output_height = court.shape[0] 
 basketball_court = np.array([[0,0], [output_width, 0], [output_width, output_height], [0, output_height]], np.float32)
 
-#Smart points [[103, 242], [788,185], [1280, 659], [334, 720]]
-#Bojan points [[580, 242], [1186, 289], [1083, 645], [238,508]]
-#Lee points [[871, 380], [1473, 424], [1238, 878], [17, 760]]
-#Smart 2 [[263, 244], [918, 208], [1207, 485], [262, 564]]
-#Giannis [[426, 314], [981, 341], [151, 512], [966, 572]]
-#Kemba [[501, 244], [981, 285], [766, 662], [87, 581]]
-#PR2 [[299, 272], [812, 239], [1111, 436], [649, 450]]
-#PR1 [[405, 240], [1028, 271], [918, 719], [23, 654]]
-#Horford [[193, 201], [731, 156], [1147, 532], [391, 627]]
-
 if draw_boxes == True:
     output_width = 1280
     output_height = 720
@@ -270,7 +260,7 @@ def main(_argv):
         
     cv2.destroyAllWindows()
 
-# A helper method 
+# get_points – A helper method that finds the bottom center of each bounding box.
 def get_points(boxes,img):
     count = len(boxes[0])
     points = []
@@ -286,8 +276,7 @@ def get_points(boxes,img):
 
 # get_tracking_points - Takes the output of the YOLOv4 detection and converts 
 # it to the format required for the sort algorithm. The required format is
-# x1, y1, x2, y2, score. The output is a list of all of the points in that format
-    
+# x1, y1, x2, y2, score. The output is a list of all of the points in that format    
 def get_tracking_points(objects, img):
     points = []
     width = img.shape[1]
@@ -325,7 +314,8 @@ def homographypts(points):
                 (transformed_pts[:,1] > 0) & (transformed_pts[:,1] < output_height)]
     return final_pts
 
-
+#homographypts_tracked – Computes the homography when the object tracking aglorithm is used. Compared to the above method
+#this one has to keep track of the track IDs when it computes the homography.
 def homographypts_tracked(boxes):
     #Converts the array to the format with the bottom middle of the boxes 
     points=[]
@@ -371,15 +361,17 @@ def draw_tracked_pts(points, img):
         cv2.circle(img, ((points[i][0]),(points[i][1])), radius=2, color=(int(color[2]), int(color[0]), int(color[1])), thickness=2)
     return img
 
-
+#get_color – Gets the color of a specific trackID. If the trackID does not have an associated color, it adds one.
 def get_color(tracking_id):
     if tracking_id in color_dict:
         return color_dict[tracking_id]
     else:
         color_dict[tracking_id] = colors[len(color_dict)]
         return color_dict[tracking_id]
+    
+    
+    
 #Helper methods that are no longer used
-
 #def draw_transformed_pts(points, img):
 #    for i in range(0, len(points)):
 #        cv2.circle(img, ((points[i][0][0]),(points[i][0][1])), radius=3, color=(0, 0, 0), thickness=3)
@@ -391,7 +383,6 @@ def get_color(tracking_id):
 #    matrix = cv2.getPerspectiveTransform(photopts,basketball_court)
 #    new = cv2.warpPerspective(img, matrix, (output_width, output_height)
 #    return new
-
 
 if __name__ == '__main__':
     try:
