@@ -12,7 +12,7 @@ import statistics
 
 
 #cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture("Sexton2ndAngle.mp4")
+cap = cv2.VideoCapture("Video.mp4")
 
 _, frame = cap.read()
 old_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -20,15 +20,6 @@ old_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 lk_params = dict(winSize = (10,10), 
                  maxLevel = 2, 
                  criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
-
-
-##def select_point(event, x, y, flags, params):
-#  #  global point, point_selected, old_points
-#   # if event == cv2.EVENT_LBUTTONDOWN:
-#   #     point = (x,y)
-#        #old_points = np.array([[x,y]], dtype = np.float32)
-#
-#        point_selected = True
 
 x, y = 261, 244   
 x2, y2 = 916,208
@@ -39,11 +30,9 @@ point2 = (x2,y2)
 point3 = (x3, y3)
 old_points = np.array([[x,y], [x2,y2], [x3, y3]], dtype = np.float32)
 cv2.namedWindow("Frame")
-#cv2.setMouseCallback("Frame", select_point)
 
-#point_selected = False
-#point = ()
-#old_points = np.array([[]])
+
+
 while True:
     _, frame = cap.read()
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
