@@ -13,8 +13,8 @@ import time
 
 starttime = time.time()
 
-points =[[299, 272], [812, 239], [1111, 436], [649, 450]]
-original_points = [[299, 272], [812, 239], [1111, 436], [649, 450]]
+points =[[x1, y1], [x2, y2], [x3, y3], [x4, y4]]
+original_points = points
 
 #Region - the maximum distance of KeyPoints that are tracked. 
 #Example: With region = 150, all points within a 300x300 pixel square centered on the point in question are tracked
@@ -97,15 +97,6 @@ while True:
         diffs[3][0].append(new_points4[i][0] - old_points4[i][0])
         diffs[3][1].append(new_points4[i][1] - old_points4[i][1])
               
-#    diffs = [[],[]]
-#    
-#    for i in range(0,len(new_points)):
-#        diffs[0].append(new_points[i][0] - old_points[i][0])
-#        diffs[1].append(new_points[i][1] - old_points[i][1])
-#    
-#    deltax = np.percentile(diffs[0], 50)
-#    deltay = np.percentile(diffs[1], 50)
-    
     deltas = [[],[],[],[]]
     
     for i in range(0, len(diffs)):
@@ -116,12 +107,6 @@ while True:
             points[i][j] = points[i][j] + deltas[i][j]
             points[i][j] = points[i][j].astype(np.float32)
             
-#    for i in range(0, len(points)):
-#        points[i][0] += deltax
-#        points[i][0] = points[i][0].astype(np.float32)
-#    for i in range(0, len(points)):
-#        points[i][1] += deltay
-#        points[i][1] = points[i][1].astype(np.float32)
     
     for i in range(0, 4):
         cv2.circle(frame, (points[i][0], points[i][1]), 5, (0,255,0), -1)
